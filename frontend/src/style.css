@@ -1,0 +1,150 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');  */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap');  
+/* @import url('https://fonts.googleapis.com/css2?family=Alkatra:wght@400;500;600;700&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Pacifico:wght@400;600;700&display=swap');   */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {   
+  /* color-scheme: light dark;  */ 
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+ 
+#root * {
+  scrollbar-width: thin;
+}  
+.ant-input  {
+  scrollbar-width: thin; 
+} 
+.ant-modal-wrap  {
+  scrollbar-width: thin; 
+} 
+.ant-modal-content * {
+  scrollbar-width: thin; 
+} 
+.ant-select-dropdown * {
+  scrollbar-width: thin; 
+} 
+.ant-picker-dropdown * {
+  scrollbar-width: thin; 
+} 
+body {
+  font-family: "Lexend", sans-serif; 
+}   
+
+
+/* Contact Form */
+#contact-form {
+  transition: opacity 0.3s ease, transform 0.3s ease-out;
+  transform: translateX(-10%);
+  opacity: 0;
+}
+
+#contact-form.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+
+/* Cookie Banner */
+#cookie-consent-banner {
+  transition: opacity 0.5s ease, transform 0.5s ease-out;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+#cookie-consent-banner.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+
+
+/* #region Underline */
+.underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform: scaleX(0);
+  visibility: hidden;
+}
+.group:hover .underline-animation::after {
+  transition: transform 0.3s ease-in-out, visibility 0s ease-in-out;
+  transform: scaleX(1);
+  visibility: visible; 
+}
+.group-fast:hover .underline-animation::after { 
+  transition: transform 0.15s ease-in-out, visibility 0s ease-in-out;
+  transform: scaleX(1);
+  visibility: visible; 
+}
+
+.underline-animation-active .underline-animation::after {
+  transition: transform 0.3s ease-in-out, visibility 0s ease-in-out;
+  transform: scaleX(1);
+  visibility: visible; 
+}
+/* for filter arrows */
+.specific-group:hover .specific-group-hover {
+  transform: rotate(180deg);
+}
+/* #endregion */
+
+
+/* #region Blurred Divs */
+@keyframes growLeft { 
+  0%, 100% {
+    width: 100%;
+  }
+  50% {
+    width: 300%; 
+  }
+}
+.grow-left {
+  animation: growLeft 15s infinite ease-in-out;
+}
+
+@keyframes scaleUp {
+  0%, 40%, 60%,100% {
+    transform: translateY(90%) scale(1);
+  }
+  50% {
+    transform: translateY(90%) scale(1.1);
+  } 
+} 
+.scaling-up {
+  animation: scaleUp 20s infinite ease-in-out;
+}
+ 
+@keyframes scaleUpSides {
+  0%, 40%, 60%,100% {
+    transform: scale(1,1);
+  }
+  50% {
+    transform: scale(1.5,1);
+  } 
+}
+.scaling-up-side {
+  animation: scaleUpSides 20s infinite ease-in-out;
+} 
+.nav-item.active {
+  border-left:3px solid #ce14d4;
+  font-weight: 600; 
+}
+.nav-item.inactive {
+  border-left:3px solid #ce14d427; 
+  font-weight: 400;
+}
+ 
+/* #endregion */

@@ -1,0 +1,7 @@
+atestbackend
+/backend/docker-compose.yaml
+/backend/Dockerfile2
+
+/frontend/docker-compose.yaml
+
+*.env

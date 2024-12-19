@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />  
+    <meta name="description" content="This is a contant form made for CONDA by Philip :).">
+    <meta name="keywords" content="contact form, vue, laravel">
+    <meta name="author" content="Philip Sanjar">
+    <link rel="icon" type="image/svg+xml" href="/email.svg" />
+    <link rel="canonical" href="%VITE_MAIN_DOMAIN%"> 
+    <link rel="stylesheet" href="./src/css/index.css" /> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" /> 
+    <title>Contact Form CONDA</title>
+ 
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','%VITE_GTM_ID%');</script> 
+
+    <!-- Initialize Consent -->
+    <script> 
+      const storedConsentData = window.localStorage.getItem('ucData')
+      if (storedConsentData){
+        const parsedConsentData = JSON.parse(storedConsentData)
+        gtag('consent', 'default', parsedConsentData)
+      } else {
+        gtag('consent', 'default', {
+          'ad_storage': 'denied',
+          'analytics_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied',
+          'personalization_storage': 'denied',
+          'functionality_storage': 'denied',
+          'security_storage': 'denied',
+        } );  
+      }
+    </script>
+  </head>
+  <body> 
+    <div id="app"></div> 
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

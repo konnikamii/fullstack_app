@@ -1,0 +1,112 @@
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+      - mailhog
+    image: laravel_backend
+    container_name: backend
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:eDcu2cGZCm9ivu3rGyabEhjtLGbBhupJjxoI1WTkJJQ=
+      - DB_CONNECTION=pgsql
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=contactForm
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=Qwerty123 
+      - MAIL_MAILER=smtp
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
+      - MAIL_USERNAME=null
+      - MAIL_PASSWORD=null
+      - MAIL_ENCRYPTION=null
+      - MAIL_FROM_ADDRESS=example@example.com
+      - MAIL_FROM_NAME="Example"
+    volumes:
+      - ./backend:/var/www/html
+      - ./backend/vendor:/var/www/vendor
+      - ./backend/storage:/var/www/storage
+    networks:
+      - app-network
+
+  # Can be used with php-ftm
+  # nginx:
+  #   image: nginx
+  #   container_name: nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "8000:80"
+  #   volumes:
+  #     - ./backend/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./backend:/var/www:ro
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - app-network
+
+
+  postgres: 
+    image: postgres
+    container_name: postgres
+
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: contactForm
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Qwerty123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+    networks:
+      - app-network 
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    restart: unless-stopped
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - app-network
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    image: frontend
+    container_name: frontend
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3000:3000"  
+    volumes:
+      - ./frontend:/app:ro
+      - /app/node_modules
+    environment:
+      - VITE_BACKEND_URL=http://127.0.0.1:8000
+      - VITE_MAIN_DOMAIN=https://yourdomain.com
+    networks:
+      - app-network
+    
+volumes:
+  postgres-db:
+
+networks:
+  app-network:
+    driver: bridge
