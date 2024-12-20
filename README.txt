@@ -49,11 +49,11 @@ Before you begin, ensure you have the following installed on your machine:
 
   php artisan key:generate
   
-5. **Run database migrations:**
+5. **Run database migrations:** (only if running locally)
 
   php artisan migrate
   
-6. **Start the Laravel development server:**
+6. **Start the Laravel development server:** (only if running locally)
 
   php artisan serve
   
@@ -116,7 +116,7 @@ By default the port is 5432, but you could change that as well, just make sure t
 You can also use the default postgres user and just set a new password.
 (also make sure the host env variable also matches your local db hostname, e.g. DB_HOST=127.0.0.1)
 
- - Mailhog configured to run on port 1025 for SMTP and port 8025 for HTTP. 
+ - Mailhog configured to run on port 1025 for SMTP and port 8025 for HTTP. (installed locally with go or in a docker container)
 This is a good guide here for windows users: https://runcloud.io/blog/mailhog-email-testing
 
 Otherwise, just comment out this part in the file located at './backend/app/Http/Controllers/ContactController.php': 
