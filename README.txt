@@ -2,6 +2,21 @@
 
 This repository contains a full-stack application using Laravel for the backend and Vue.js with Vite for the frontend together with PostgreSQL. The project is Dockerized for easy setup and deployment. It includes Mailhog, unit testing, and is setup and ready for GTM and Google Analytics 4 (cookies).
 
+
+## Test it out first
+
+The project is live under the following domain http://138.197.191.191
+If you want to test it navigate to http://138.197.191.191:4173
+Fill in the form and send your message. 
+Refresh the page if you receive successful response to see all (old and new) contacts in the db. (click show button)
+If you want to test the backend navigate to http://138.197.191.191:8000/api/contacts
+You should receive something like this:
+{"data":[
+  {"id":7,"name":"TestUser","email":"test@test.com","subject":"Testing the form","message":"Hello world! We are live!!! :)","created_at":"2024-12-20T22:13:48.000000Z","updated_at":"2024-12-20T22:13:48.000000Z"},
+  ...]}
+If you want to see mailhog's interface navigate to http://138.197.191.191:8025/
+
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed on your machine:
@@ -89,6 +104,8 @@ Before you begin, ensure you have the following installed on your machine:
 Mailhog: Mailhog is included in the Docker setup to catch outgoing emails. Access it at http://localhost:8025
 
 Database: The Docker setup includes a PostgreSQL database. Configure the connection in the .env file.
+
+By default the copied .env files should work when you run docker-compose up --build , however if any errors occur make sure the correct hostnames, ports, and credentials are specified for postgres and mailhog. Also check the frontend and backend urls.
 
 
 

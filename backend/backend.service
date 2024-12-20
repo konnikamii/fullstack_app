@@ -1,0 +1,15 @@
+[Unit]
+Description=backend_service
+After=network.target postgresql.service mailhog.service
+Requires=postgresql.service mailhog.service
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/root/app/backend/
+Environment="PATH=/usr/bin"
+ExecStart=/usr/bin/php /root/app/backend/artisan serve --host=0.0.0.0 --port=8000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
