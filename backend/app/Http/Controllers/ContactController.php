@@ -27,8 +27,7 @@ class ContactController extends Controller
      * Store a newly created resource in storage.
      */ 
      public function store(StoreContactsRequest $request): JsonResponse 
-     { 
-        // return new ContactsResource(Contacts::create($request->all()));
+     {  
          try {
              // Validate the request data
              $validatedData = $request->validate([

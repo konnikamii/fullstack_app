@@ -1,6 +1,6 @@
 # My Laravel and Vue.js Project
 
-This repository contains a full-stack application using Laravel for the backend and Vue.js with Vite for the frontend. The project is Dockerized for easy setup and deployment.
+This repository contains a full-stack application using Laravel for the backend and Vue.js with Vite for the frontend together with PostgreSQL. The project is Dockerized for easy setup and deployment. It includes Mailhog, unit testing, and is setup and ready for GTM and Google Analytics 4 (cookies).
 
 ## Prerequisites
 
@@ -10,6 +10,7 @@ Before you begin, ensure you have the following installed on your machine:
 - [npm](https://www.npmjs.com/) (version 10 or higher)
 - [PHP](https://www.php.net/) (version 8.4 or higher)
 - [Composer](https://getcomposer.org/) (version 2.8 or higher)
+- [Laravel](composer global require laravel/installer) (version 5.11 or higher)
 - [Docker](https://www.docker.com/) (@latest)
 - [Docker Compose](https://docs.docker.com/compose/) (@latest)
 
@@ -53,9 +54,14 @@ Before you begin, ensure you have the following installed on your machine:
 
   npm install
   
-3. **Start the Vite development server:**
+3. **Copy the example environment file and configure it:**
+
+  cp .env.example .env.local 
+
+4. **Start the Vite development server:**
 
   npm run dev
+
 
 
 ### Docker Setup
@@ -74,7 +80,7 @@ Before you begin, ensure you have the following installed on your machine:
   By default the backend will be available at http://localhost:8000
   By default the frontend will be available at http://localhost:3000
 
-  Try sending a sending a message with the contact form and refresh the page to see it available
+  Try sending a message with the contact form and refresh the page to see it
 
 
   
@@ -88,14 +94,48 @@ Database: The Docker setup includes a PostgreSQL database. Configure the connect
 
 If you want to run it LOCALLY you would need to have installed: 
 
- - PostgreSQL with its GUI pgAdmin4 (optional) and create a database with the name in your .env file. 
-By default the port is 5432 but you could change that as well, just make sure but the .env and PostgreSQL are on the same port.
+ - PostgreSQL with its GUI 'pgAdmin4' (optional) and create a database with the name in your .env file. 
+By default the port is 5432, but you could change that as well, just make sure that the .env and PostgreSQL are on the same port.
 You can also use the default postgres user and just set a new password.
+(also make sure the host env variable also matches your local db hostname, e.g. DB_HOST=127.0.0.1)
 
  - Mailhog configured to run on port 1025 for SMTP and port 8025 for HTTP. 
 This is a good guide here for windows users: https://runcloud.io/blog/mailhog-email-testing
 
+Otherwise, just comment out this part in the file located at './backend/app/Http/Controllers/ContactController.php': 
+***
+Mail::raw($validatedData['message'], function ($message) use ($validatedData) {
+    $message->to('test@mailhog.local')
+            ->subject($validatedData['subject'])
+            ->from($validatedData['email'], $validatedData['name']);
+});
+***
 
 
 
+*** Testing *** 
+There are some test units in the backend directory for some of the routes.
+In order to run them make sure you can connect to the db ,i.e. all .env variables are set correctly and execute the following script:
 
+php artisan test
+
+You should see that all tests are successful. If not something with the setup is incorrect.
+
+
+*** Helpfull commands for PostgreSQL ***
+
+Windows:
+pg_ctl status -D "C:\Program Files\PostgreSQL\[version]\data"  -> checks the PostgreSQL process status
+pg_ctl restart  -D "C:\Program Files\PostgreSQL\[version]\data"  -> restart the PostgreSQL process
+pg_ctl.exe register -N "PostgreSQL" -U "NT AUTHORITY\NetworkService" -D "C:\Program Files\PostgreSQL\[version]\data" -w  -> creates a service to start on boot
+
+
+Linux: 
+pg_ctl status -D /var/lib/postgresql/[version]/main  -> checks the PostgreSQL process status
+pg_ctl restart -D /var/lib/postgresql/[version]/main  -> restart the PostgreSQL process
+pg_ctl start -D /var/lib/postgresql/[version]/main  -> start the PostgreSQL process
+pg_ctl stop -D /var/lib/postgresql/[version]/main  -> stop the PostgreSQL process
+
+
+*** GTM & GA4 *** 
+If you want to connect your application to google services you need to create GTM account and GA4 account. Then copy each of the unique IDs and replace them in your frontend .env file.
