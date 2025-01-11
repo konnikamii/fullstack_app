@@ -1,4 +1,5 @@
 <?php
+
 // filepath: /d:/PhpFiles/vite_vue/backend2/app/Http/Kernel.php
 
 namespace App\Http;
@@ -15,7 +16,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        // Other middleware...
+        // Add middleware...
         // \App\Http\Middleware\CorsMiddleware::class,
         // \App\Http\Middleware\VerifyCsrfToken::class,
     ];

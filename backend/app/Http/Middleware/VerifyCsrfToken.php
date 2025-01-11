@@ -1,4 +1,5 @@
 <?php
+
 // filepath: /d:/PhpFiles/vite_vue/backend/app/Http/Middleware/VerifyCsrfToken.php
 
 namespace App\Http\Middleware;

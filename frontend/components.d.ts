@@ -12,6 +12,7 @@ declare module 'vue' {
     AInput: typeof import('ant-design-vue/es')['Input']
     ATextarea: typeof import('ant-design-vue/es')['Textarea']
     ContactForm: typeof import('./src/components/ContactForm.vue')['default']
+    ContactFormOld: typeof import('./src/components/ContactFormOld.vue')['default']
     Cookies: typeof import('./src/components/Cookies.vue')['default']
     Navbar: typeof import('./src/components/Navbar.vue')['default']
   }

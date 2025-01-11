@@ -1,0 +1,28 @@
+# Ignore environment files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Ignore node_modules and vendor directories
+node_modules
+vendor
+
+# Ignore log files and temporary files
+*.log
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+
+# Ignore IDE and editor files 
+.vscode 
+
+# Ignore Docker-related files
+Dockerfile
+docker-compose.yml
+ 
+dist  
+npm-debug.log
+yarn-error.log

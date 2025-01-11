@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 // @ts-ignore
 import axios, { AxiosError, AxiosResponse } from "axios";
 import {
@@ -13,30 +13,11 @@ import { message } from "ant-design-vue";
 import { BACKEND_URL, maxMessageLength } from "../utils/defaults";
 import { obfuscateEmail, formatTimestamp } from "../utils/helperFunctions";
 
-const [_, contextHolder] = message.useMessage(); // For Antd message notifications
+const [_, contextHolder] = message.useMessage();
 
-// #region State variables
 const contacts = ref<ContactsGet["data"]>([]);
 const showContacts = ref(false);
-const csrfToken = ref("");
-const isLoading = ref(false);
 
-const form = reactive<Form>({
-  name: "",
-  email: "",
-  subject: "",
-  message: "",
-});
-
-const errors = reactive<FormErrors>({
-  name: null,
-  email: null,
-  subject: null,
-  message: null,
-});
-// #endregion
-
-// #region Methods
 const fetchContacts = async () => {
   try {
     const response: AxiosResponse<ContactsGet> = await axios.get(
@@ -47,102 +28,6 @@ const fetchContacts = async () => {
     console.error("Error fetching contacts:", error);
   }
 };
-
-const fetchCsrfToken = async () => {
-  try {
-    const response: AxiosResponse<{ csrf_token: string }> = await axios.get(
-      `${BACKEND_URL}/api/csrf-token`
-    );
-    csrfToken.value = response.data.csrf_token;
-  } catch (error) {
-    console.error("Error fetching CSRF token:", error);
-  }
-};
-
-const clearForm = () => {
-  form.name = "";
-  form.email = "";
-  form.subject = "";
-  form.message = "";
-};
-
-const setErrors = (validationErrors: ValidationError) => {
-  for (const key in validationErrors) {
-    if (validationErrors.hasOwnProperty(key)) {
-      errors[key as keyof FormErrors] = validationErrors[key].join(", ");
-    }
-  }
-};
-
-const validateForm = (): boolean => {
-  let valid = true;
-
-  if (!form.name) {
-    errors.name = "Name cannot be empty!";
-    valid = false;
-  }
-  if (!form.email) {
-    errors.email = "Email is required!";
-    valid = false;
-  } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-    errors.email = "Email is invalid!";
-    valid = false;
-  }
-  if (!form.subject) {
-    errors.subject = "Subject is required!";
-    valid = false;
-  }
-  if (!form.message) {
-    errors.message = "Message is required!";
-    valid = false;
-  } else if (form.message.length > maxMessageLength) {
-    errors.message = "Message too long!";
-    valid = false;
-  }
-
-  return valid;
-};
-
-const submitForm = async () => {
-  if (!validateForm()) {
-    return;
-  }
-
-  isLoading.value = true;
-
-  const formData = new FormData();
-  formData.append("name", form.name);
-  formData.append("email", form.email);
-  formData.append("subject", form.subject);
-  formData.append("message", form.message);
-
-  try {
-    await axios.post<ApiResponse>(`${BACKEND_URL}/api/contacts`, formData, {
-      headers: {
-        "X-CSRF-TOKEN": csrfToken.value,
-      },
-    });
-    message.success("Success! Your message has been sent.", 3);
-    clearForm();
-  } catch (error) {
-    const err = error as AxiosError<ApiResponse>;
-    if (err.response?.data.errors) {
-      setErrors(err.response.data.errors);
-      message.error(
-        "Validation failed: " +
-        Object.values(err.response.data.errors).join(", "),
-        3
-      );
-    } else {
-      message.error("An error occurred. Please try again.", 3);
-    }
-  } finally {
-    isLoading.value = false;
-  }
-};
-// #endregion
-
-// Lifecycle hooks
 onMounted(() => {
   const formEl = document.getElementById("contact-form");
   if (formEl) {
@@ -151,7 +36,6 @@ onMounted(() => {
     }, 100);
   }
   fetchContacts();
-  fetchCsrfToken();
 });
 </script>
 
@@ -226,7 +110,7 @@ onMounted(() => {
               " />
           <div class="w-full min-h-[20px] mb-2 relative">
             <transition name="slide-fade">
-              <div v-if="errors.message" class="text-sm text-red-500 sm:w-10/12 w-8/12">
+              <div v-if="errors.message" class="text-sm text-red-500">
                 {{ errors.message }}
               </div>
             </transition>
@@ -267,6 +151,118 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<script lang="ts">
+export default defineComponent({
+  data() {
+    return {
+      form: { name: "", email: "", subject: "", message: "" } as Form,
+      errors: {
+        name: null,
+        email: null,
+        subject: null,
+        message: null,
+      } as FormErrors,
+      isLoading: false,
+      csrfToken: "",
+    };
+  },
+  created() {
+    this.fetchCsrfToken();
+  },
+  methods: {
+    fetchCsrfToken() {
+      axios
+        .get(`${BACKEND_URL}/api/csrf-token`)
+        .then((response: AxiosResponse<{ csrf_token: string }>) => {
+          this.csrfToken = response.data.csrf_token;
+        })
+        .catch((error) => {
+          console.error("Error fetching CSRF token:", error);
+        });
+    },
+    submitForm() {
+      // Custom Validation
+      if (!this.form.name) {
+        this.errors.name = "Name cannot be empty!";
+      }
+      if (!this.form.email) {
+        this.errors.email = "Email is required!";
+      } else if (!/\S+@\S+\.\S+/.test(this.form.email)) {
+        this.errors.email = "Email is invalid!";
+      }
+      if (!this.form.subject) {
+        this.errors.subject = "Subject is required!";
+      }
+      if (!this.form.message) {
+        this.errors.message = "Message is required!";
+      } else if (this.form.message.length > maxMessageLength) {
+        this.errors.message = "Message too long!";
+      }
+      if (
+        this.errors.name ||
+        this.errors.email ||
+        this.errors.subject ||
+        this.errors.message
+      ) {
+        return;
+      }
+
+      this.isLoading = true;
+      const formData = new FormData();
+      formData.append("name", this.form.name);
+      formData.append("email", this.form.email);
+      formData.append("subject", this.form.subject);
+      formData.append("message", this.form.message);
+
+      axios
+        .post<ApiResponse>(`${BACKEND_URL}/api/contacts`, formData, {
+          headers: {
+            "X-CSRF-TOKEN": this.csrfToken,
+          },
+        })
+        .then((response: AxiosResponse<ApiResponse>) => {
+          console.log(response);
+          if (response) {
+            message.success("Success! Your message has been sent.", 3);
+            this.clearForm();
+          }
+        })
+        .catch((error: AxiosError<ApiResponse>) => {
+          console.log(error);
+          if (error.response && error.response.data.errors) {
+            this.setErrors(error.response.data.errors);
+            message.error(
+              "Validation failed: " +
+              Object.values(error.response.data.errors).join(", "),
+              3
+            );
+          } else {
+            message.error("An error occurred. Please try again.", 3);
+          }
+        });
+      setTimeout(() => (this.isLoading = false), 1500);
+    },
+    setErrors(errors: ValidationError) {
+      for (const key in errors) {
+        if (errors.hasOwnProperty(key)) {
+          this.errors[key as keyof FormErrors] = errors[key].join(", ");
+        }
+      }
+    },
+    clearForm() {
+      this.form.name = "";
+      this.form.email = "";
+      this.form.subject = "";
+      this.form.message = "";
+    },
+    clearError(field: keyof Form) {
+      console.log(field);
+      this.errors[field] = null;
+    },
+  },
+});
+</script>
 
 <style scoped>
 .slide-fade-enter-active {

@@ -25,13 +25,7 @@ class StoreContactsRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'subject' => 'required|string|max:255',
-            'message' => 'required|string|max:1000',
+            'message' => 'required|string|max:1500',
         ];
     }
-
-    // protected function prepareForValidation() {
-    //     $this->merge([
-    //         'name'=> '',
-    //     ])
-    // }
 }

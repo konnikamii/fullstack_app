@@ -1,1 +1,19 @@
-.env
+# Ignore environment files
+.env 
+
+# Ignore node_modules and vendor directories 
+vendor
+
+# Ignore log files and temporary files
+*.log
+storage/logs
+storage/framework/cache
+storage/framework/sessions
+storage/framework/views
+
+# Ignore IDE and editor files 
+.vscode 
+
+# Ignore Docker-related files
+Dockerfile
+docker-compose.yaml

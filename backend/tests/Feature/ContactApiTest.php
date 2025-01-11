@@ -1,11 +1,12 @@
 <?php
+
 // filepath: /d:/PhpFiles/vite_vue/backend2/tests/Feature/ContactApiTest.php
 
 namespace Tests\Feature;
 
+use App\Models\Contacts;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\Models\Contacts;
 
 class ContactApiTest extends TestCase
 {
@@ -17,7 +18,7 @@ class ContactApiTest extends TestCase
         $response = $this->getJson('/api/csrf-token');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure(['csrf_token']);
+            ->assertJsonStructure(['csrf_token']);
     }
 
     #[\PHPUnit\Framework\Attributes\Test]
@@ -33,7 +34,7 @@ class ContactApiTest extends TestCase
         $response = $this->postJson('/api/contacts', $data);
 
         $response->assertStatus(201)
-                 ->assertJsonFragment(['success' => true]);
+            ->assertJsonFragment(['success' => true]);
 
         $this->assertDatabaseHas('contacts', $data);
     }
@@ -46,18 +47,18 @@ class ContactApiTest extends TestCase
         $response = $this->getJson('/api/contacts');
 
         $response->assertStatus(200)
-                 ->assertJsonStructure([
-                     'data' => [
-                         '*' => [
-                             'id',
-                             'name',
-                             'email',
-                             'subject',
-                             'message',
-                             'created_at',
-                             'updated_at',
-                         ]
-                     ]
-                 ]);
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => [
+                        'id',
+                        'name',
+                        'email',
+                        'subject',
+                        'message',
+                        'created_at',
+                        'updated_at',
+                    ],
+                ],
+            ]);
     }
 }

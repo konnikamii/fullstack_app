@@ -2,15 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Contacts;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-use App\Models\Contacts;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contacts>
  */
 class ContactsFactory extends Factory
 {
-    
     protected $model = Contacts::class;
 
     /**

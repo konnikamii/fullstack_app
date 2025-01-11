@@ -32,28 +32,11 @@ services:
       - MAIL_FROM_ADDRESS=example@example.com
       - MAIL_FROM_NAME="Example"
     volumes:
-      - ./backend:/var/www/html
-      - ./backend/vendor:/var/www/vendor
-      - ./backend/storage:/var/www/storage
+      - ./backend:/var/www 
+      - /var/www/vendor 
     networks:
       - app-network
-
-  # Can be used with php-ftm
-  # nginx:
-  #   image: nginx
-  #   container_name: nginx
-  #   restart: unless-stopped
-  #   ports:
-  #     - "8000:80"
-  #   volumes:
-  #     - ./backend/nginx.conf:/etc/nginx/nginx.conf:ro
-  #     - ./backend:/var/www:ro
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app-network
-
-
+ 
   postgres: 
     image: postgres
     container_name: postgres
@@ -96,7 +79,7 @@ services:
     ports:
       - "3000:3000"  
     volumes:
-      - ./frontend:/app:ro
+      - ./frontend:/app
       - /app/node_modules
     environment:
       - VITE_BACKEND_URL=http://127.0.0.1:8000

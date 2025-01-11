@@ -1,8 +1,5 @@
 FROM node:22
-
-# Install Vite globally
-# RUN npm install -g vite
-
+ 
 # Set working directory
 WORKDIR /app
 

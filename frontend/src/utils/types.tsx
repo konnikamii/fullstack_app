@@ -13,7 +13,6 @@ export interface FormErrors {
   message: string | null;
 }
 
-
 export interface ValidationError {
   [key: string]: string[];
 }
@@ -25,12 +24,12 @@ export interface ApiResponse {
 
 export interface ContactsGet {
   data: {
-    id: number,
-    name: string,
-    email: string,
-    subject: string,
-    message: string,
-    created_at: string,
-    updated_at: string
-  }[]
+    id: number;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    created_at: string;
+    updated_at: string;
+  }[];
 }

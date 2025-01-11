@@ -30,7 +30,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www 
 
 # Copy working directory
-COPY . /var/www 
+COPY . /var/www
 
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www 
