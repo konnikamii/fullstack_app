@@ -1,26 +1,37 @@
 # Laravel / Vue.js Project 
-<div style="display: flex; justify-content: center; align-items: center;">
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
   <a href="https://laravel.com" target="_blank">
     <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
   </a>
   <a href="https://vuejs.org/" target="_blank">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKvAz8bSMDxZvg1ZjElGs285z3WDhxMySLcA&s" height="120" alt="Vue Logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Vue.js_Logo_2.svg/2367px-Vue.js_Logo_2.svg.png" height="120" alt="Vue Logo">
   </a>
-</div>
-<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 0px">
-  <a href="https://vite.dev/" target="_blank">
-    <img src="https://de.vitejs.dev/logo-with-shadow.png" height="50" alt="Vite Logo">
-  </a>
-  <a href="https://www.postgresql.org/" target="_blank">
-    <img src="https://www.unixmen.com/wp-content/uploads/2017/07/postgresql-logo.png" height="50" alt="postgresql Logo">
-  </a>
-  <a href="https://github.com/mailhog" target="_blank">
-    <img src="https://avatars.githubusercontent.com/u/10258541?s=200&v=4" height="50" alt="mailhog Logo">
-  </a>
-  <a href="https://www.docker.com/ target="_blank">
-    <img src="https://www.logo.wine/a/logo/Docker_(software)/Docker_(software)-Logo.wine.svg" height="100" alt="docker Logo">
-  </a>
-</div>
+</p>
+
+<table align="center" > 
+  <tr>
+    <td>
+      <a href="https://vite.dev/" target="_blank">
+        <img src="https://de.vitejs.dev/logo-with-shadow.png" height="50" alt="Vite Logo">
+      </a>
+    </td>
+    <td>
+      <a href="https://www.postgresql.org/" target="_blank">
+        <img src="https://www.unixmen.com/wp-content/uploads/2017/07/postgresql-logo.png" height="50" alt="PostgreSQL Logo">
+      </a>
+    </td>
+    <td>
+      <a href="https://github.com/mailhog" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/10258541?s=200&v=4" height="50" alt="Mailhog Logo">
+      </a>
+    </td>
+    <td>
+      <a href="https://www.docker.com/" target="_blank">
+        <img src="https://www.logo.wine/a/logo/Docker_(software)/Docker_(software)-Logo.wine.svg" height="100" alt="Docker Logo">
+      </a>
+    </td>
+  </tr>
+</table>
 
 This repository contains a full-stack application using **Laravel** for the backend and **Vue.js with Vite** for the frontend together with **PostgreSQL**. The project is **Dockerized** for easy setup and deployment. It includes **Mailhog**, **unit testing**, and is set up and ready for **GTM and Google Analytics 4 (cookies)**.
 
